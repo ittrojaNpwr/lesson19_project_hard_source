@@ -3,7 +3,7 @@ from dao.model.user import User
 
 class UserDAO:
 
-    def __int__(self, session):
+    def __init__(self, session):
         self.session = session
 
     def get_all(self):

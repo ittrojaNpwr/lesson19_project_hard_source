@@ -8,7 +8,7 @@ from helpers.constants import PWD_HASH_SALT, PWD_HASH_ITERATIONS
 
 class UserService:
 
-    def __int__(self, dao: UserDAO):
+    def __init__(self, dao: UserDAO):
         self.dao = dao
 
     def get_one(self, uid):

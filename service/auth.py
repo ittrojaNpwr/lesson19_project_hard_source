@@ -7,8 +7,8 @@ from service.user import UserService
 
 
 class AuthService:
-    def __int__(self, user_service: UserService):
-        self.user_service = UserService
+    def __init__(self, user_service: UserService):
+        self.user_service = user_service
 
     def generate_token(self, username, password, is_refresh=False):
         user = self.user_service.get_by_username(username)
@@ -24,11 +24,11 @@ class AuthService:
 
         min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         data['exp'] = calendar.timegm(min30.timetuple())
-        access_token = jwt.encode(data, SECRET, algorithm=[ALGO])
+        access_token = jwt.encode(data, SECRET, algorithm=ALGO)
 
         days30 = datetime.datetime.utcnow() + datetime.timedelta(days=30)
         data["exp"] = calendar.timegm(days30.timetuple())
-        refresh_token = jwt.encode(data, SECRET, algorithm=[ALGO])
+        refresh_token = jwt.encode(data, SECRET, algorithm=ALGO)
 
         return {
             "access_token": access_token,
@@ -36,7 +36,7 @@ class AuthService:
         }
 
     def refresh_token(self, token):
-        data = jwt.decode(jwt=token, key=SECRET, algorithms=[ALGO])
+        data = jwt.decode(jwt=token, key=SECRET, algorithms=ALGO)
         username = data.get('username')
 
         return self.generate_token(username, None, is_refresh=True)
